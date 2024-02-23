@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "771234933146",
+    "project_id": "instagramproject-c7601",
+    "storage_bucket": "instagramproject-c7601.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:771234933146:android:d23da2293276ea42183223",
+        "android_client_info": {
+          "package_name": "com.mertadali.instagramcloneproject"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBdIPNk4w-Gea8k-zL3LrUfBHjvEQH4kWg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
