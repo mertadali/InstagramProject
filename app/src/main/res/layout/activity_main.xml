@@ -31,7 +31,7 @@
                 android:id="@+id/loginText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Login"
+                android:text="login"
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="36sp"
@@ -40,51 +40,59 @@
             <EditText
                 android:id="@+id/username"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="60dp"
                 android:layout_marginTop="40dp"
-                android:background="@drawable/edittext"
-                android:drawableLeft="@android:drawable/sym_action_email"
+
+                android:drawableStart="@android:drawable/sym_action_email"
                 android:drawablePadding="8dp"
                 android:hint="Email"
+                android:importantForAutofill="no"
+                android:inputType="textEmailAddress"
                 android:padding="8dp"
                 android:textColor="@color/black"
-                android:textColorHighlight="@color/black" />
+                android:textColorHighlight="@color/black"
+                tools:ignore="HardcodedText" />
 
             <EditText
                 android:id="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/edittext"
-                android:drawableLeft="@android:drawable/ic_lock_idle_lock"
+
+                android:drawableStart="@android:drawable/ic_lock_idle_lock"
                 android:drawablePadding="8dp"
                 android:hint="Password"
+                android:importantForAutofill="no"
                 android:inputType="textPassword"
                 android:padding="8dp"
                 android:textColor="@color/black"
-                android:textColorHighlight="@color/cardview_dark_background" />
+                android:textColorHighlight="@color/cardview_dark_background"
+                tools:ignore="HardcodedText" />
 
             <Button
                 android:id="@+id/loginButton"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginTop="30dp"
-                android:backgroundTint="@color/purple"
+                android:backgroundTint="#606AB8"
+                android:hint="LOGIN"
                 android:onClick="login"
-                android:text="Login"
                 android:textSize="18sp"
-                app:cornerRadius="20dp" />
+                app:cornerRadius="20dp"
+                tools:ignore="HardcodedText" />
 
             <Button
                 android:id="@+id/SignupButton"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginTop="10dp"
-                android:backgroundTint="@color/purple"
-                android:onClick="signup"
-                android:text="Sign Up"
+                android:backgroundTint="#606AB8"
+                android:hint="SIGN UP"
+
+                android:onClick="signUp"
                 android:textSize="18sp"
-                app:cornerRadius="20dp" />
+                app:cornerRadius="20dp"
+                tools:ignore="HardcodedText" />
 
 
             <CheckBox
