@@ -18,17 +18,42 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
         auth = FirebaseAuth.getInstance()
 
+        // Aktif kullanıcı var mı sorgusu
+
+        val currentUser = auth.currentUser
+        if (currentUser != null){
+            val intent = Intent(this@MainActivity,FeedActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
 
 
 
     }
 
-    private  fun login(view: View){
+      fun signIn(view: View){
 
+          val email = binding.username.text.toString()
+          val password = binding.password.text.toString()
+
+          if (email == "" || password == ""){
+              Toast.makeText(this@MainActivity,"Your email or password is empty",Toast.LENGTH_LONG)
+          }else{
+              auth.signInWithEmailAndPassword(email,password)
+                  .addOnSuccessListener {
+                      val intent = Intent(this@MainActivity,FeedActivity::class.java)
+                      startActivity(intent)
+                      finish()
+
+                  }.addOnFailureListener {exception ->
+                      Toast.makeText(this@MainActivity,exception.localizedMessage,Toast.LENGTH_LONG)
+                  }
+          }
 
     }
 
-    fun signUp(view: View){
+     fun signUp(view: View){
 
         val email = binding.username.text.toString()
         val password = binding.password.text.toString()

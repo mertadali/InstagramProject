@@ -75,8 +75,8 @@
                 android:layout_height="60dp"
                 android:layout_marginTop="30dp"
                 android:backgroundTint="#606AB8"
-                android:hint="LOGIN"
-                android:onClick="login"
+                android:hint="SIGN IN"
+                android:onClick="signIn"
                 android:textSize="18sp"
                 app:cornerRadius="20dp"
                 tools:ignore="HardcodedText" />
