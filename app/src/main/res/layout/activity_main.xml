@@ -11,7 +11,7 @@
     android:background="@drawable/instabackground"
 
 
-    tools:context=".MainActivity">
+    tools:context=".view.MainActivity">
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

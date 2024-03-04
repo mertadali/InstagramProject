@@ -1,4 +1,4 @@
-package com.mertadali.instagramcloneproject
+package com.mertadali.instagramcloneproject.view
 
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -14,9 +14,14 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.Firebase
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.firestore
 import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.storage
 import com.mertadali.instagramcloneproject.databinding.ActivityUploadBinding
 import java.util.UUID
 
@@ -24,9 +29,9 @@ class UploadActivity : AppCompatActivity() {
     private lateinit var binding: ActivityUploadBinding
     private lateinit var permissionLauncher: ActivityResultLauncher<String>
     private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
-    var selectedPicture : Uri? = null
+    private var selectedPicture : Uri? = null
     private lateinit var auth : FirebaseAuth
-    private lateinit var firestore : FirebaseFirestore
+    private lateinit var firestoreDatabase : FirebaseFirestore
     private lateinit var storage : FirebaseStorage
 
 
@@ -39,9 +44,9 @@ class UploadActivity : AppCompatActivity() {
         setContentView(view)
         registerLauncher()
 
-        auth = FirebaseAuth.getInstance()
-        firestore = FirebaseFirestore.getInstance()
-        storage = FirebaseStorage.getInstance()
+         auth = Firebase.auth
+        firestoreDatabase = Firebase.firestore
+        storage = Firebase.storage
 
 
 
@@ -61,6 +66,23 @@ class UploadActivity : AppCompatActivity() {
                 val uploadImageReference = storage.reference.child("images").child(imageName)
                 uploadImageReference.downloadUrl.addOnSuccessListener {
                     val downloadUrl = it.toString()
+                    if (auth.currentUser != null){
+                        val postMap = hashMapOf<String,Any>()
+                        postMap["downloadUrl"] = downloadUrl
+                        postMap["userEmail"] = auth.currentUser!!.email!!
+                        postMap["comment"] = binding.commentText.text.toString()
+                        postMap["date"] = Timestamp.now()
+
+                        firestoreDatabase.collection("Posts").add(postMap).addOnSuccessListener {
+                            finish()
+
+                        }.addOnFailureListener {Exeption ->
+                            Toast.makeText(this@UploadActivity,Exeption.localizedMessage,Toast.LENGTH_LONG).show()
+                        }
+
+
+                    }
+
 
 
                 }.addOnFailureListener {
