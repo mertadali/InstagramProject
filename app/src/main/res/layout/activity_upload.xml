@@ -3,18 +3,17 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
     android:background="@drawable/instagram2"
-
-
     tools:context=".view.MainActivity">
+
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
         android:layout_margin="30dp"
         app:cardCornerRadius="30dp"
         app:cardElevation="20dp"
@@ -25,46 +24,60 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:orientation="vertical"
+
             android:padding="24dp">
 
-
             <ImageView
+
                 android:id="@+id/imageView"
-                android:layout_width="wrap_content"
-                android:layout_height="250dp"
+                android:layout_width="350dp"
+                android:layout_height="280dp"
                 android:onClick="selectImage"
-                card_view:srcCompat="@drawable/upload" />
+
+                app:srcCompat="@drawable/upload"
+
+                android:layout_margin="20dp"
+                android:layout_gravity="center"
+                tools:ignore="HardcodedText"
+                android:contentDescription="@string/select_image_description"
+
+
+                />
+
+
+
 
 
             <EditText
                 android:id="@+id/commentText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="280dp"
+                android:layout_height="50dp"
                 android:layout_margin="20dp"
-                android:ems="10"
-                android:hint="Enter Comments"
+                android:hint="Enter Comment..."
+                tools:ignore="HardcodedText"
+
+
+                android:backgroundTint="@color/white"
                 android:inputType="textPersonName"
-                  android:textColor="@color/black" />
-
-
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                />
 
 
             <Button
                 android:id="@+id/loginButton"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginTop="30dp"
-                android:backgroundTint="#6E4DA5"
-                android:onClick="upload"
-                android:text="Upload"
+                android:layout_height="50dp"
+                android:backgroundTint="#606AB8"
+                android:hint="Upload"
+                android:onClick="uploadImage"
                 android:textSize="18sp"
-                app:cornerRadius="20dp" />
-
-
-
+                app:cornerRadius="20dp"
+                tools:ignore="HardcodedText" />
 
 
         </LinearLayout>
+
     </androidx.cardview.widget.CardView>
 
 </LinearLayout>

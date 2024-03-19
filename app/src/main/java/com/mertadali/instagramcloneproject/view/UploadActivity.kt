@@ -37,6 +37,7 @@ class UploadActivity : AppCompatActivity() {
 
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityUploadBinding.inflate(layoutInflater)
@@ -52,51 +53,51 @@ class UploadActivity : AppCompatActivity() {
 
     }
 
-    fun upload(view: View) {
 
-        // Universal unique id  storage birden fazla görsel eklemek için.
+
+
+     fun uploadImage(view: View) {
+        // Universal unique id
         val uuid = UUID.randomUUID()
         val imageName = "$uuid.jpg"
 
+        val storage = Firebase.storage
         val reference = storage.reference
         val imageReference = reference.child("images").child(imageName)
+
         if (selectedPicture != null){
             imageReference.putFile(selectedPicture!!).addOnSuccessListener {
                 // download url alıp -> Firestore kaydetme işlemi
-                val uploadImageReference = storage.reference.child("images").child(imageName)
-                uploadImageReference.downloadUrl.addOnSuccessListener {
-                    val downloadUrl = it.toString()
-                    if (auth.currentUser != null){
-                        val postMap = hashMapOf<String,Any>()
-                        postMap["downloadUrl"] = downloadUrl
-                        postMap["userEmail"] = auth.currentUser!!.email!!
-                        postMap["comment"] = binding.commentText.text.toString()
-                        postMap["date"] = Timestamp.now()
+                val downloadUrl = it.toString()
+                if (auth.currentUser != null){
+                    val postMap = hashMapOf<String,Any>()
+                    postMap["comment"] = binding.commentText.text.toString()
+                    postMap["downloadUrl"] = downloadUrl
+                    postMap["userEmail"] = auth.currentUser!!.email!!
+                    postMap["date"] = Timestamp.now()
 
-                        firestoreDatabase.collection("Posts").add(postMap).addOnSuccessListener {
+
+                    firestoreDatabase.collection("Posts").add(postMap).addOnCompleteListener {
+                        if (it.isComplete && it.isSuccessful) {
                             finish()
-
-                        }.addOnFailureListener {Exeption ->
-                            Toast.makeText(this@UploadActivity,Exeption.localizedMessage,Toast.LENGTH_LONG).show()
                         }
+                            //back
 
 
+                    }.addOnFailureListener {
+                        Toast.makeText(this@UploadActivity,it.localizedMessage,Toast.LENGTH_LONG).show()
                     }
 
-
-
-                }.addOnFailureListener {
-                    Toast.makeText(this@UploadActivity,it.localizedMessage,Toast.LENGTH_LONG).show()
                 }
 
 
             }.addOnFailureListener {
                 Toast.makeText(this@UploadActivity,it.localizedMessage,Toast.LENGTH_LONG).show()
-
             }
         }
 
     }
+
 
     fun selectImage(view: View) {
         // Galeriye gitmek için izin gerekli
