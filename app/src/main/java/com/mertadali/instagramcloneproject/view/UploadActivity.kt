@@ -38,6 +38,7 @@ class UploadActivity : AppCompatActivity() {
 
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityUploadBinding.inflate(layoutInflater)
@@ -51,9 +52,9 @@ class UploadActivity : AppCompatActivity() {
 
 
 
+
+
     }
-
-
 
 
      fun uploadImage(view: View) {
@@ -68,35 +69,48 @@ class UploadActivity : AppCompatActivity() {
         if (selectedPicture != null){
             imageReference.putFile(selectedPicture!!).addOnSuccessListener {
                 // download url alıp -> Firestore kaydetme işlemi
-                val downloadUrl = it.toString()
-                if (auth.currentUser != null){
-                    val postMap = hashMapOf<String,Any>()
-                    postMap["comment"] = binding.commentText.text.toString()
-                    postMap["downloadUrl"] = downloadUrl
-                    postMap["userEmail"] = auth.currentUser!!.email!!
-                    postMap["date"] = Timestamp.now()
+                val uploadedImageReference = storage.reference.child("images").child(imageName)
+                uploadedImageReference.downloadUrl.addOnSuccessListener {
+                    val downloadUrl = it.toString()
+
+                    if (auth.currentUser != null){
+                        val postMap = hashMapOf<String,Any>()
+                        postMap["comment"] = binding.commentText.text.toString()
+                        postMap["downloadUrl"] = downloadUrl
+                        postMap["userEmail"] = auth.currentUser!!.email!!
+                        postMap["date"] = Timestamp.now()
 
 
-                    firestoreDatabase.collection("Posts").add(postMap).addOnCompleteListener {
-                        if (it.isComplete && it.isSuccessful) {
-                            finish()
-                        }
+
+
+
+                        firestoreDatabase.collection("Posts").add(postMap).addOnCompleteListener {
+                            if (it.isComplete && it.isSuccessful) {
+                                finish()
+                            }
                             //back
 
 
-                    }.addOnFailureListener {
-                        Toast.makeText(this@UploadActivity,it.localizedMessage,Toast.LENGTH_LONG).show()
+                        }.addOnFailureListener {
+                            Toast.makeText(this@UploadActivity,it.localizedMessage,Toast.LENGTH_LONG).show()
+                        }
+
                     }
 
+
+                }.addOnFailureListener {
+                    Toast.makeText(this@UploadActivity,it.localizedMessage,Toast.LENGTH_LONG).show()
+                }
+            }
+
+        }
                 }
 
 
-            }.addOnFailureListener {
-                Toast.makeText(this@UploadActivity,it.localizedMessage,Toast.LENGTH_LONG).show()
-            }
-        }
 
-    }
+
+
+
 
 
     fun selectImage(view: View) {

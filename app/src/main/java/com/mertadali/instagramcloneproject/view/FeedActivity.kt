@@ -22,15 +22,14 @@ import com.mertadali.instagramcloneproject.R
 import com.mertadali.instagramcloneproject.adapter.FeedRecyclerAdapter
 import com.mertadali.instagramcloneproject.databinding.ActivityFeedBinding
 import com.mertadali.instagramcloneproject.model.Post
-import java.util.*
 import kotlin.collections.ArrayList
 
-class FeedActivity : AppCompatActivity() {
+class FeedActivity : AppCompatActivity()  {
     private lateinit var binding: ActivityFeedBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var firestoreDatabase: FirebaseFirestore
     private lateinit var feedAdapter : FeedRecyclerAdapter
-    var postArrayList : ArrayList<Post> = ArrayList()
+    private var postArrayList : ArrayList<Post> = ArrayList()
 
 
 
@@ -57,6 +56,7 @@ class FeedActivity : AppCompatActivity() {
 
     // verileri alma
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun getData() {
         // Filtreleme işlemi için where ya da orderBy kullanılır
         firestoreDatabase.collection("Posts").orderBy("date",Query.Direction.DESCENDING).addSnapshotListener { value, error ->
@@ -75,7 +75,16 @@ class FeedActivity : AppCompatActivity() {
                             val downlaodUrl = document.get("downloadUrl") as String
                             val userEmail = document.get("userEmail") as String
 
+
+
+
+
+
+
                             val post = Post(userEmail, downlaodUrl, comment)
+
+
+
 
                             postArrayList.add(post)
                         }
@@ -87,6 +96,7 @@ class FeedActivity : AppCompatActivity() {
 
 
     }
+
 
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

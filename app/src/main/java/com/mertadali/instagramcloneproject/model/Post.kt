@@ -4,5 +4,6 @@ package com.mertadali.instagramcloneproject.model
   var userEmail : String,
  var downloadUrl : String,
  var comment : String
+
  )
 
